@@ -3,6 +3,7 @@ import { useAuthStore } from '../stores/auth';
 
 import PrivLayout from '../components/layout/PrivLayout.vue';
 import PubLayout from '../components/layout/PubLayout.vue';
+import EmptyPubLayout from '../components/layout/EmptyPubLayout.vue'; // Import the new layout
 
 const routes = [
   {
@@ -14,8 +15,14 @@ const routes = [
         name: 'Home',
         component: () => import('../views/pub/home.vue'),
       },
+    ],
+  },
+  {
+    path: '/login', // Move login out of the root children to use a different layout
+    component: EmptyPubLayout, // Use the new empty layout for login
+    children: [
       {
-        path: 'login',
+        path: '',
         name: 'Login',
         component: () => import('../views/Login.vue'),
       },
