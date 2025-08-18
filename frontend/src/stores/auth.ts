@@ -4,6 +4,8 @@ import { jwtDecode } from 'jwt-decode';
 interface UserPayload {
   email: string;
   sub: number;
+  name: string;
+  role: string;
   iat: number;
   exp: number;
 }
