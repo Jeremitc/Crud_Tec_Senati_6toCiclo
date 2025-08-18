@@ -6,6 +6,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '@prisma/client';
+import { RequestWithUser } from '../common/interfaces/request-with-user.interface';
 import { Request } from 'express';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -30,16 +31,16 @@ export class UsersController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto, @Req() req: Request) {
-    if (id === (req.user as any).id) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto, @Req() req: RequestWithUser) {
+    if (id === req.user.id) {
       throw new ForbiddenException('No puedes actualizar tu propia cuenta a través de esta interfaz.');
     }
     return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number, @Req() req: Request) {
-    if (id === (req.user as any).id) {
+  remove(@Param('id', ParseIntPipe) id: number, @Req() req: RequestWithUser) {
+    if (id === req.user.id) {
       throw new ForbiddenException('No puedes eliminar tu propia cuenta.');
     }
     return this.usersService.remove(id);
