@@ -65,20 +65,7 @@ const handleLogin = async () => {
     console.log('Login successful. User role:', authStore.userRole); // <-- Nuevo log
 
     // --- LÓGICA DE REDIRECCIÓN CORREGIDA ---
-    const userRole = authStore.userRole;
-    if (userRole === 'ADMIN') {
-      router.push({ name: 'AdminUserManagement' });
-    } else if (userRole === 'MANAGEMENT') {
-      router.push({ name: 'ManagementGraficosReportes' });
-    } else if (userRole === 'SUPERVISOR') {
-      router.push({ name: 'SupervisorDashboard' });
-    } else if (userRole === 'SITE') {
-      router.push({ name: 'SiteAvance' });
-    } else if (userRole === 'OT') {
-      router.push({ name: 'OTPersonal' });
-    } else {
-      router.push('/'); // Fallback por si acaso
-    }
+    router.push({ name: 'Dashboard' }); // Redirige al dashboard por defecto
     
   } catch (err) {
     error.value = 'Credenciales inválidas. Por favor, intente de nuevo.';

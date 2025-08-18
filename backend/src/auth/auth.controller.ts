@@ -26,6 +26,6 @@ export class AuthController {
       maxAge: 1000 * 60 * 60, // 1 hora
     });
 
-    return { message: 'Login successful' };
+    return { access_token, message: 'Login successful' };
   }
 }

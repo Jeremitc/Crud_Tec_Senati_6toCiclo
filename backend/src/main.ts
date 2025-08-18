@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Global Prefix
-  app.setGlobalPrefix('api');
+  // app.setGlobalPrefix('api'); // Comentado: el prefijo API se maneja en el frontend
 
   // Global Pipes
   app.useGlobalPipes(

@@ -51,8 +51,10 @@ router.beforeEach((to, _from, next) => {
   const authStore = useAuthStore();
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !authStore.isAuthenticated) {
-    next('/'); // Redirige a la página de login si no está autenticado
+  if (to.name === 'Login' && authStore.isAuthenticated) {
+    next({ name: 'Dashboard' }); // Redirige al dashboard si ya está autenticado y va a login
+  } else if (requiresAuth && !authStore.isAuthenticated) {
+    next({ name: 'Login' }); // Redirige a la página de login si no está autenticado y la ruta lo requiere
   } else {
     next(); // Permite el acceso
   }
