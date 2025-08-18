@@ -28,7 +28,7 @@ export const loginUser = async (credentials: any) => {
   return response.data;
 };
 
-// --- User Management API ---
+
 export const createUser = async (userData: any) => {
   const response = await api.post('/users', userData);
   return response.data;
