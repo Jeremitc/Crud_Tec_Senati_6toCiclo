@@ -24,7 +24,7 @@ const routes = [
       {
         path: '',
         name: 'Dashboard',
-        component: () => import('../views/dashboard/dashboard.vue'),
+        component: () => import('../views/priv/user/dashboard.vue'),
       },
     ],
   },
@@ -36,12 +36,12 @@ const routes = [
       {
         path: '',
         name: 'AdminPanel',
-        component: () => import('../views/admin/adminPanel.vue'),
+        component: () => import('../views/priv/admin/adminPanel.vue'),
       },
       {
         path: 'users',
         name: 'UserGestion',
-        component: () => import('../views/admin/UserGestion.vue'),
+        component: () => import('../views/priv/admin/UserGestion.vue'),
       },
     ],
   },

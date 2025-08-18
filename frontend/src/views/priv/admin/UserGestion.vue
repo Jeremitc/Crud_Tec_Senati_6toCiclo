@@ -157,8 +157,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
-import { createUser, deleteUser, getAllUsers, updateUser } from '../../api';
-import { useAuthStore } from '../../stores/auth';
+import { createUser, deleteUser, getAllUsers, updateUser } from '../../../api';
+import { useAuthStore } from '../../../stores/auth';
 
 interface User {
   id: number;
