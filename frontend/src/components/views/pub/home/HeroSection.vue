@@ -1,6 +1,9 @@
 <template>
   <section class="relative h-screen flex items-center justify-center text-center overflow-hidden">
-    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://via.placeholder.com/1920x1080/667eea/ffffff?text=Landing+Page+Hero'); opacity: 0.7;"></div>
+    <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-70">
+      <source src="/home.mp4" type="video/mp4">
+      Tu navegador no soporta la etiqueta de video.
+    </video>
     <div class="relative z-10 p-8 max-w-4xl mx-auto bg-white bg-opacity-90 rounded-lg shadow-xl transform transition-all duration-500 ease-out hover:scale-[1.01]">
       <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-4 leading-tight">
         Bienvenido a Nuestra Plataforma
