@@ -11,6 +11,11 @@ const routes = [
     children: [
       {
         path: '',
+        name: 'Home',
+        component: () => import('../views/pub/home.vue'),
+      },
+      {
+        path: 'login',
         name: 'Login',
         component: () => import('../views/Login.vue'),
       },
@@ -60,21 +65,48 @@ const router = createRouter({
 router.beforeEach((to, _from, next) => {
   const authStore = useAuthStore();
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const allowedRoles = to.meta.roles as string[] | undefined;
+  const userRole = authStore.userRole;
 
-  if (to.name === 'Login' && authStore.isAuthenticated) {
-    // Si ya está autenticado y va a login, redirige según el rol
-    if (authStore.userRole === 'ADMIN') {
-      next({ name: 'AdminPanel' });
-    } else {
-      next({ name: 'Dashboard' });
+  if (authStore.isAuthenticated) {
+    // 1. Si el usuario ya está autenticado y trata de ir a Login o Home
+    if (to.name === 'Login' || to.name === 'Home') {
+      if (userRole === 'ADMIN') {
+        next({ name: 'AdminPanel' });
+      } else {
+        next({ name: 'Dashboard' });
+      }
     }
-  } else if (requiresAuth && !authStore.isAuthenticated) {
-    next({ name: 'Login' }); // Redirige a la página de login si no está autenticado y la ruta lo requiere
-  } else if (requiresAuth && to.meta.roles && authStore.userRole && !(to.meta.roles as string[]).includes(authStore.userRole)) {
-    // Si la ruta requiere un rol específico y el usuario no lo tiene, redirige al dashboard
-    next({ name: 'Dashboard' });
-  } else {
-    next(); // Permite el acceso
+    // 2. Si el usuario está autenticado y trata de ir a una ruta protegida
+    else if (requiresAuth) {
+      // 2a. Si la ruta tiene roles específicos y el rol del usuario no está permitido
+      if (allowedRoles && userRole && !allowedRoles.includes(userRole)) {
+        if (userRole === 'ADMIN') {
+          next({ name: 'AdminPanel' }); // Redirige al admin a su panel si intenta ir a una ruta de usuario
+        } else {
+          next({ name: 'Dashboard' }); // Redirige al usuario a su dashboard si intenta ir a una ruta de admin
+        }
+      }
+      // 2b. Si la ruta requiere autenticación y el rol es permitido (o no hay roles específicos)
+      else {
+        next();
+      }
+    }
+    // 3. Si el usuario está autenticado y trata de ir a cualquier otra ruta pública (que no sea Login/Home)
+    else {
+      next();
+    }
+  }
+  // Si el usuario NO está autenticado
+  else {
+    // 4. Si la ruta requiere autenticación, redirige a Home
+    if (requiresAuth) {
+      next({ name: 'Home' });
+    }
+    // 5. Si la ruta no requiere autenticación (es pública), permite el acceso
+    else {
+      next();
+    }
   }
 });
 
