@@ -4,14 +4,14 @@
       <source src="/home.mp4" type="video/mp4">
       Tu navegador no soporta la etiqueta de video.
     </video>
-    <div class="relative z-10 p-8 max-w-4xl mx-auto bg-white bg-opacity-90 rounded-lg shadow-xl transform transition-all duration-500 ease-out hover:scale-[1.01]">
-      <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-4 leading-tight">
-        Bienvenido a Nuestra Plataforma
+    <div class="relative z-10 p-8 max-w-4xl mx-auto text-white">
+      <h1 class="text-5xl md:text-6xl font-extrabold mb-4 leading-tight drop-shadow-lg text-gradient">
+        Bienvenido
       </h1>
-      <p class="text-xl md:text-2xl text-gray-700 mb-8">
+      <p class="text-xl md:text-2xl mb-8 drop-shadow-md text-gradient">
         La solución integral para la gestión de usuarios y recursos.
       </p>
-      <router-link to="/login" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-105">
+      <router-link to="/login" class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-105">
         Comenzar Ahora
       </router-link>
     </div>
@@ -23,5 +23,11 @@
 </script>
 
 <style scoped>
-/* Estilos específicos para esta sección si son necesarios */
+.text-gradient {
+  background: linear-gradient(to right, #8B5CF6, #EC4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent; /* Fallback for browsers that don't support background-clip */
+}
 </style>
