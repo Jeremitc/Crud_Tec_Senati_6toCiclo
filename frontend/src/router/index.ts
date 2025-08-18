@@ -31,12 +31,17 @@ const routes = [
   {
     path: '/admin',
     component: PrivLayout,
-    meta: { requiresAuth: true, roles: ['ADMIN'] }, // Solo para administradores
+    meta: { requiresAuth: true, roles: ['ADMIN'] },
     children: [
       {
         path: '',
         name: 'AdminPanel',
         component: () => import('../views/admin/adminPanel.vue'),
+      },
+      {
+        path: 'users',
+        name: 'UserGestion',
+        component: () => import('../views/admin/UserGestion.vue'),
       },
     ],
   },
