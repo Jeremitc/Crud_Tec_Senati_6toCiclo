@@ -18,6 +18,7 @@ model User {
   role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  disabled  Boolean  @default(false)
 }
 
 enum Role {

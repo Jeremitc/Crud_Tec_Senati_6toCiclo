@@ -19,20 +19,25 @@ const routes = [
   {
     path: '/dashboard',
     component: PrivLayout,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true, roles: ['USER'] }, // Solo para usuarios normales
     children: [
       {
         path: '',
         name: 'Dashboard',
         component: () => import('../views/dashboard/dashboard.vue'),
       },
-      // Aquí puedes agregar más rutas privadas que usen PrivLayout
-      // Ejemplo:
-      // {
-      //   path: 'ia',
-      //   name: 'IA',
-      //   component: () => import('../views/ia/ia.vue'),
-      // },
+    ],
+  },
+  {
+    path: '/admin',
+    component: PrivLayout,
+    meta: { requiresAuth: true, roles: ['ADMIN'] }, // Solo para administradores
+    children: [
+      {
+        path: '',
+        name: 'AdminPanel',
+        component: () => import('../views/admin/adminPanel.vue'),
+      },
     ],
   },
   // Redirección por si la ruta no existe
@@ -52,9 +57,17 @@ router.beforeEach((to, _from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (to.name === 'Login' && authStore.isAuthenticated) {
-    next({ name: 'Dashboard' }); // Redirige al dashboard si ya está autenticado y va a login
+    // Si ya está autenticado y va a login, redirige según el rol
+    if (authStore.userRole === 'ADMIN') {
+      next({ name: 'AdminPanel' });
+    } else {
+      next({ name: 'Dashboard' });
+    }
   } else if (requiresAuth && !authStore.isAuthenticated) {
     next({ name: 'Login' }); // Redirige a la página de login si no está autenticado y la ruta lo requiere
+  } else if (requiresAuth && to.meta.roles && authStore.userRole && !(to.meta.roles as string[]).includes(authStore.userRole)) {
+    // Si la ruta requiere un rol específico y el usuario no lo tiene, redirige al dashboard
+    next({ name: 'Dashboard' });
   } else {
     next(); // Permite el acceso
   }

@@ -1,0 +1,36 @@
+[Nest] 13792  - 17/08/2025, 8:48:08 p. m.  
+   LOG [NestApplication] Nest application successfully started +34ms
+[Nest] 13792  - 17/08/2025, 8:48:26 p. m.  
+ ERROR [ExceptionsHandler] PrismaClientValidationError:
+Invalid `this.prisma.user.update()` invocation in
+C:\Users\Usuario\Desktop\Proyecto empresa\Crud_Tec_Senati_6toCiclo\backend\src\users\users.service.ts:39:29
+
+  36 if (updateUserDto.password) {
+  37   updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);        
+  38 }
+→ 39 return this.prisma.user.update({      
+       where: {
+         id: 1
+       },
+       data: {
+         disabled: false,
+         ~~~~~~~~
+         email: "admin@example.com",       
+         name: "Admin User",
+         role: "ADMIN",
+     ?   password?: String | StringFieldUpdateOperationsInput,
+     ?   createdAt?: DateTime | DateTimeFieldUpdateOperationsInput,
+     ?   updatedAt?: DateTime | DateTimeFieldUpdateOperationsInput
+       }
+     })
+
+Unknown argument `disabled`. Available options are marked with ?.
+    at throwValidationException (C:\Users\Usuario\Desktop\Proyecto empresa\Crud_Tec_Senati_6toCiclo\backend\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:45:9)
+    at ei.handleRequestError (C:\Users\Usuario\Desktop\Proyecto empresa\Crud_Tec_Senati_6toCiclo\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)   
+    at ei.handleAndLogRequestError (C:\Users\Usuario\Desktop\Proyecto empresa\Crud_Tec_Senati_6toCiclo\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at ei.request (C:\Users\Usuario\Desktop\Proyecto empresa\Crud_Tec_Senati_6toCiclo\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at async a (C:\Users\Usuario\Desktop\Proyecto empresa\Crud_Tec_Senati_6toCiclo\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:833:24)
+    at async C:\Users\Usuario\Desktop\Proyecto empresa\Crud_Tec_Senati_6toCiclo\backend\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at async C:\Users\Usuario\Desktop\Proyecto empresa\Crud_Tec_Senati_6toCiclo\backend\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+  clientVersion: '6.14.0'
+}

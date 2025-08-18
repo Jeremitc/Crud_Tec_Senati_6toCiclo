@@ -65,7 +65,12 @@ const handleLogin = async () => {
     console.log('Login successful. User role:', authStore.userRole); // <-- Nuevo log
 
     // --- LÓGICA DE REDIRECCIÓN CORREGIDA ---
-    router.push({ name: 'Dashboard' }); // Redirige al dashboard por defecto
+    const userRole = authStore.userRole;
+    if (userRole === 'ADMIN') {
+      router.push({ name: 'AdminPanel' });
+    } else {
+      router.push({ name: 'Dashboard' });
+    }
     
   } catch (err) {
     error.value = 'Credenciales inválidas. Por favor, intente de nuevo.';
